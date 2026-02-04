@@ -1,0 +1,7 @@
+put http://localhost:3001/api/movies/69826b753adcba7346083b18
+Content-Type: application/json
+
+{
+  "title": "updated movie",
+  "rating": 2
+}

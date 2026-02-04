@@ -1,0 +1,10 @@
+post http://localhost:3001/api/movies
+Content-Type: application/json
+
+{
+  "title": "old movie",
+  "director": "engnhshl",
+  "year": 2004,
+  "genre": "Drama",
+  "rating": 5
+}
