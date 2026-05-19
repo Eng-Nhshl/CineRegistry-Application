@@ -9,7 +9,7 @@ const App = () => {
       <div className="max-w-4xl mx-auto">
         {/* Header Section */}
         <header className="text-center mb-12">
-          <h1 className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-500 mb-2">
+          <h1 className="text-5xl font-black text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-green-500 mb-2">
             CineRegistry Application
           </h1>
           <p className="text-gray-500 font-medium text-lg">

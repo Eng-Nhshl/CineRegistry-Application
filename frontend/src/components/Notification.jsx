@@ -1,11 +1,10 @@
-import { useSelector } from "react-redux";
+import useNotificationStore from "../stores/useNotificationStore"; // Path to your new store
 
 const Notification = () => {
-  const message = useSelector((state) => state.notification);
+  const message = useNotificationStore((state) => state.notification);
 
   if (!message) return null;
 
-  // Determine if it's an error based on the text
   const isError =
     message.toLowerCase().includes("error") ||
     message.toLowerCase().includes("fail");
