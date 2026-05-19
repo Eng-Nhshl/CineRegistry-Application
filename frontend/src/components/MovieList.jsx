@@ -1,10 +1,11 @@
-import { useSelector } from "react-redux";
 import { useMovies } from "../hooks/useMovies";
+import useFilterStore from "../stores/useFilteStore";
 import Movie from "./Movie";
 
 const MovieList = () => {
   const { movies, isLoading, isError } = useMovies();
-  const filter = useSelector((state) => state.filter);
+
+  const filter = useFilterStore((state) => state.filter);
 
   if (isLoading) {
     return (
@@ -28,6 +29,7 @@ const MovieList = () => {
     );
   }
 
+  // 3. This stays completely identical and clean!
   const filteredMovies = movies.filter((movie) => {
     const searchTerm = filter?.toLowerCase() ?? "";
     const title = movie.title?.toLowerCase() ?? "";
@@ -56,7 +58,7 @@ const MovieList = () => {
 
   return (
     <div>
-      {/* 1. Header Row (Title + Badge) */}
+      {/* Header Row (Title + Badge) */}
       <div className="flex items-center justify-between mb-4 border-b border-gray-200 pb-2">
         <h2 className="text-2xl font-bold text-gray-800">Your Collection</h2>
         <span className="bg-white px-3 py-1 rounded-full text-sm font-semibold text-blue-600 shadow-sm border border-blue-100 flex items-center gap-2">
@@ -65,7 +67,7 @@ const MovieList = () => {
         </span>
       </div>
 
-      {/* 2. The Movie List (Moved outside the flex header) */}
+      {/* The Movie List */}
       <ul className="space-y-0">
         {filteredMovies.map((movie) => (
           <Movie key={movie.id} movie={movie} />

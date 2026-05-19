@@ -1,12 +1,28 @@
-import { useDispatch } from "react-redux";
-import { setFilter } from "../reducers/filterReducer";
+import { useEffect, useRef } from "react";
+import useFilterStore from "../stores/useFilteStore";
 
 const Filter = () => {
-  const dispatch = useDispatch();
+  const filter = useFilterStore((state) => state.filter);
+  const setFilter = useFilterStore((state) => state.setFilter);
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setFilter("");
+        if (inputRef.current) {
+          inputRef.current.blur();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [setFilter]);
 
   return (
     <div className="relative w-full max-w-2xl mx-auto mb-10 group">
-      {/* Search Icon (Magnifying Glass) */}
       <div className="absolute inset-y-0 left-0 flex items-center pl-5 pointer-events-none">
         <svg
           className="w-5 h-5 text-gray-400 group-focus-within:text-blue-500 transition-colors"
@@ -24,20 +40,31 @@ const Filter = () => {
       </div>
 
       <input
+        ref={inputRef}
         type="text"
+        value={filter}
         className="block w-full p-4 pl-12 text-sm text-gray-900 border border-gray-200 rounded-2xl bg-white shadow-sm transition-all duration-300
                     placeholder:text-gray-400
                     focus:ring-4 focus:ring-blue-100 focus:border-blue-400 focus:outline-none 
                     hover:border-gray-300 hover:shadow-md"
         placeholder="Search by title, director, or genre..."
-        onChange={(e) => dispatch(setFilter(e.target.value))}
+        onChange={(e) => setFilter(e.target.value)}
       />
 
-      {/* Subtle indicator for "active" state */}
+      {/* Subtle indicator for "active" state or clear indicator */}
       <div className="absolute inset-y-0 right-4 flex items-center pr-1">
-        <kbd className="hidden sm:inline-block px-2 py-1 text-xs font-semibold text-gray-400 bg-gray-100 border border-gray-200 rounded-lg">
-          ESC to clear
-        </kbd>
+        {filter ? (
+          <button
+            onClick={() => setFilter("")}
+            className="text-gray-400 hover:text-gray-600 transition-colors mr-1 font-semibold text-xs px-2"
+          >
+            ✕ Clear
+          </button>
+        ) : (
+          <kbd className="hidden sm:inline-block px-2 py-1 text-xs font-semibold text-gray-400 bg-gray-100 border border-gray-200 rounded-lg">
+            ESC to clear
+          </kbd>
+        )}
       </div>
     </div>
   );

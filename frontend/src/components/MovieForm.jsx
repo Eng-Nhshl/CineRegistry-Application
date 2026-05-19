@@ -10,7 +10,8 @@ const MovieForm = () => {
   const { reset: clearGenre, ...genre } = useField("text");
 
   const rating = useStars(0);
-  const { addMovie, isLoading } = useMovies(); // Assuming you return isLoading/isPending
+
+  const { addMovie, isLoading } = useMovies();
 
   const handleSubmit = (e) => {
     e.preventDefault();
